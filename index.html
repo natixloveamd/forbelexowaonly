@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#1b1e33">
+<title>Для тебя</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23f0a1b5' d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/%3E%3C/svg%3E">
+<style>
+  :root {
+    --bg: #1b1e33;
+    --card: #23263f;
+    --line: #353a5c;
+    --ink: #ece9f5;
+    --mute: #9b9cb8;
+    --rose: #f0a1b5;
+  }
+  * { box-sizing: border-box; }
+  html { background: var(--bg); }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    min-height: 100dvh;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    padding: env(safe-area-inset-top, 0px) 0 env(safe-area-inset-bottom, 0px);
+    -webkit-tap-highlight-color: transparent;
+  }
+  main {
+    position: relative;
+    z-index: 1;
+    max-width: 440px;
+    margin: 0 auto;
+    padding: 20vh 22px 56px;
+  }
+  h1 {
+    margin: 0 0 22px;
+    text-align: center;
+    font: 400 30px/1.2 Georgia, "Times New Roman", serif;
+    letter-spacing: .01em;
+  }
+  form { position: relative; }
+  input {
+    width: 100%;
+    height: 56px;
+    padding: 0 62px 0 22px;
+    border-radius: 28px;
+    border: 1px solid var(--line);
+    background: rgba(255, 255, 255, .04);
+    color: var(--ink);
+    font: 17px system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    outline: none;
+    -webkit-appearance: none;
+  }
+  input::placeholder { color: var(--mute); }
+  input:focus-visible { border-color: var(--rose); }
+  button {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 40px;
+    height: 40px;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+  }
+  button:focus-visible { outline: 2px solid var(--rose); }
+  button svg { width: 22px; height: 22px; fill: var(--rose); }
+  #out { margin-top: 10px; }
+  .note {
+    margin: 22px 4px 0;
+    color: var(--mute);
+    font-size: 15px;
+    line-height: 1.5;
+    text-align: center;
+    animation: show .5s ease both;
+  }
+  .card {
+    margin-top: 14px;
+    padding: 20px 22px;
+    border-radius: 20px;
+    border: 1px solid var(--line);
+    background: var(--card);
+    font: 19px/1.6 Georgia, "Times New Roman", serif;
+    animation: show .5s ease both;
+  }
+  .card svg { width: 14px; height: 14px; fill: var(--rose); margin-right: 9px; vertical-align: -1px; }
+  .card img { display: block; width: 100%; height: auto; border-radius: 12px; margin-bottom: 14px; }
+  .card:nth-child(2) { animation-delay: .12s; }
+  .card:nth-child(3) { animation-delay: .24s; }
+  @keyframes show { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+  .bg-heart { position: fixed; z-index: 0; fill: var(--rose); pointer-events: none; }
+  .h1 { width: 84px; top: 7vh; right: 8vw; opacity: .10; transform: rotate(12deg); }
+  .h2 { width: 38px; bottom: 11vh; left: 9vw; opacity: .08; transform: rotate(-14deg); }
+  .h3 { width: 22px; top: 46vh; right: 6vw; opacity: .07; }
+  .h1 { animation: beat 5s ease-in-out infinite; }
+  @keyframes beat { 0%, 100% { transform: rotate(12deg) scale(1); } 50% { transform: rotate(12deg) scale(1.07); } }
+  @media (prefers-reduced-motion: reduce) { .h1, .card, .note { animation: none; } }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="heart" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></symbol>
+</svg>
+<svg class="bg-heart h1" viewBox="0 0 24 24" aria-hidden="true"><use href="#heart"/></svg>
+<svg class="bg-heart h2" viewBox="0 0 24 24" aria-hidden="true"><use href="#heart"/></svg>
+<svg class="bg-heart h3" viewBox="0 0 24 24" aria-hidden="true"><use href="#heart"/></svg>
+
+<main>
+  <h1>Что тебя беспокоит?</h1>
+  <form id="f" autocomplete="off">
+    <input id="q" type="search" placeholder="устала, скучно, страшно…" enterkeyhint="search" autocapitalize="none" aria-label="Что тебя беспокоит?">
+    <button type="submit" aria-label="Найти"><svg viewBox="0 0 24 24"><use href="#heart"/></svg></button>
+  </form>
+  <div id="out" aria-live="polite"></div>
+</main>
+
+<script src="cards.js"></script>
+<script>
+  const norm = s => s.toLowerCase().replace(/ё/g, "е").replace(/[^a-zа-я0-9\s]/g, " ");
+  const prepared = CARDS.map(c => ({
+    text: c.text,
+    image: c.image,
+    tags: c.tags.split(",").map(t => norm(t).trim()).filter(Boolean),
+    words: norm(c.text).split(/\s+/)
+  }));
+
+  function search(query) {
+    const tokens = norm(query).split(/\s+/).filter(t => t.length >= 3);
+    return prepared
+      .map(c => {
+        let score = 0;
+        for (const t of tokens) {
+          if (c.tags.some(g => g !== "*" && (t.startsWith(g) || (t.length >= 4 && g.startsWith(t))))) score += 3;
+          else if (t.length >= 4 && c.words.some(w => w.startsWith(t))) score += 1;
+        }
+        return { c, score };
+      })
+      .filter(x => x.score > 0)
+      .sort((a, b) => b.score - a.score)
+      .slice(0, 3)
+      .map(x => x.c);
+  }
+
+  const out = document.getElementById("out");
+  const q = document.getElementById("q");
+
+  function card(c) {
+    const d = document.createElement("div");
+    d.className = "card";
+    if (c.image) {
+      const img = document.createElement("img");
+      img.src = c.image;
+      img.alt = "";
+      d.appendChild(img);
+    }
+    const p = document.createElement("div");
+    p.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><use href="#heart"/></svg>';
+    p.appendChild(document.createTextNode(c.text));
+    d.appendChild(p);
+    return d;
+  }
+
+  document.getElementById("f").addEventListener("submit", e => {
+    e.preventDefault();
+    q.blur();
+    out.innerHTML = "";
+    if (!q.value.trim()) return;
+    const found = search(q.value);
+    if (found.length) {
+      found.forEach(c => out.appendChild(card(c)));
+      return;
+    }
+    const note = document.createElement("p");
+    note.className = "note";
+    note.textContent = "Такого слова у меня нет. Попробуй сказать по-другому, например «устала» или «грустно». А пока вот это:";
+    out.appendChild(note);
+    const fallback = prepared.filter(c => c.tags.includes("*"));
+    out.appendChild(card(fallback[Math.floor(Math.random() * fallback.length)]));
+  });
+</script>
+</body>
+</html>
