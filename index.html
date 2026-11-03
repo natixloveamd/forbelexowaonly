@@ -96,13 +96,23 @@
   .card:nth-child(3) { animation-delay: .24s; }
   @keyframes show { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 
-  .bg-heart { position: fixed; z-index: 0; fill: var(--rose); pointer-events: none; }
-  .h1 { width: 84px; top: 7vh; right: 8vw; opacity: .10; transform: rotate(12deg); }
-  .h2 { width: 38px; bottom: 11vh; left: 9vw; opacity: .08; transform: rotate(-14deg); }
-  .h3 { width: 22px; top: 46vh; right: 6vw; opacity: .07; }
-  .h1 { animation: beat 5s ease-in-out infinite; }
-  @keyframes beat { 0%, 100% { transform: rotate(12deg) scale(1); } 50% { transform: rotate(12deg) scale(1.07); } }
-  @media (prefers-reduced-motion: reduce) { .h1, .card, .note { animation: none; } }
+  .hearts { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+  .fall {
+    position: absolute;
+    top: -60px;
+    fill: var(--rose);
+    will-change: transform;
+    animation: fall var(--dur) linear var(--delay) infinite;
+  }
+  @keyframes fall {
+    0%   { transform: translate3d(0, 0, 0) rotate(var(--r0)); }
+    50%  { transform: translate3d(var(--sway), 55vh, 0) rotate(calc((var(--r0) + var(--r1)) / 2)); }
+    100% { transform: translate3d(0, calc(100vh + 120px), 0) rotate(var(--r1)); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .card, .note { animation: none; }
+    .fall { animation: none; transform: translateY(var(--y)) rotate(var(--r0)); }
+  }
 </style>
 </head>
 <body>
@@ -110,9 +120,7 @@
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="heart" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></symbol>
 </svg>
-<svg class="bg-heart h1" viewBox="0 0 24 24" aria-hidden="true"><use href="#heart"/></svg>
-<svg class="bg-heart h2" viewBox="0 0 24 24" aria-hidden="true"><use href="#heart"/></svg>
-<svg class="bg-heart h3" viewBox="0 0 24 24" aria-hidden="true"><use href="#heart"/></svg>
+<div class="hearts" id="hearts" aria-hidden="true"></div>
 
 <main>
   <h1>Что тебя беспокоит?</h1>
@@ -148,6 +156,32 @@
       .sort((a, b) => b.score - a.score)
       .slice(0, 3)
       .map(x => x.c);
+  }
+
+
+  // Медленно падающие сердечки на фоне. Подкрутить можно здесь:
+  const HEARTS = 14;          // сколько сердечек
+  const SLOWEST = 38;         // самое медленное падение, секунд
+  const FASTEST = 22;         // самое быстрое, секунд
+  const hearts = document.getElementById("hearts");
+  for (let i = 0; i < HEARTS; i++) {
+    const size = 14 + Math.random() * 32;
+    const dur = FASTEST + Math.random() * (SLOWEST - FASTEST);
+    const el = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    el.setAttribute("viewBox", "0 0 24 24");
+    el.setAttribute("class", "fall");
+    el.innerHTML = '<use href="#heart"/>';
+    el.style.cssText =
+      "left:" + (Math.random() * 96).toFixed(1) + "vw;" +
+      "width:" + size.toFixed(0) + "px;" +
+      "opacity:" + (0.06 + Math.random() * 0.09).toFixed(3) + ";" +
+      "--dur:" + dur.toFixed(1) + "s;" +
+      "--delay:-" + (Math.random() * dur).toFixed(1) + "s;" +
+      "--sway:" + ((Math.random() - 0.5) * 60).toFixed(0) + "px;" +
+      "--r0:" + ((Math.random() - 0.5) * 50).toFixed(0) + "deg;" +
+      "--r1:" + ((Math.random() - 0.5) * 50).toFixed(0) + "deg;" +
+      "--y:" + (Math.random() * 90).toFixed(0) + "vh;";
+    hearts.appendChild(el);
   }
 
   const out = document.getElementById("out");
